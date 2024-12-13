@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Order Confirmation</h1>
+    </header>
+
+    <main id="confirmation-details">
+        <!-- Confirmation details will be displayed here -->
+    </main>
+
+    <script>
+        // Retrieve the order details from localStorage
+        const orderDetails = JSON.parse(localStorage.getItem("latestOrder"));
+
+        if (!orderDetails) {
+            // If there's no order details, show an error message
+            document.getElementById("confirmation-details").innerHTML = "<p>No order details found.</p>";
+        } else {
+            // Display the order confirmation details
+            const confirmationDiv = document.getElementById("confirmation-details");
+            confirmationDiv.innerHTML = `
+                <h2>Thank you for your order!</h2>
+                <p><strong>Email:</strong> ${orderDetails.email}</p>
+                <p><strong>Delivery Address:</strong> ${orderDetails.address}</p>
+                <h3>Items Ordered:</h3>
+                <ul>
+                    ${orderDetails.items.map(item => `
+                        <li>${item.name} - $${item.price} x ${item.quantity}</li>
+                    `).join('')}
+                </ul>
+                <h3>Total Price: $${orderDetails.items.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</h3>
+            `;
+        }
+    </script>
+</body>
+</html>

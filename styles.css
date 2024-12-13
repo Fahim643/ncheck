@@ -1,0 +1,148 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+header {
+    position: relative;
+    background-image: url('0202bcfc-6c17-4f24-9d0a-9b2495d94101.jpeg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 50px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    min-height: 200px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+header h1 {
+    font-family: 'Brush Script MT', sans-serif;
+    font-size: clamp(6rem, 15vw, 12rem); /* Responsive text size */
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+    font-weight: bold;
+    color: white;
+
+
+}
+
+header::after {
+    content: '';                            /* Pseudo-element for overlay */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);   /* Semi-transparent black overlay */
+    z-index: -1;                            /* Keep it behind the text */
+}
+
+.product-search {
+    margin: 20px auto;
+    text-align: center;
+}
+
+#search-box {
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#product-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+.product {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    background-color: white;
+    transition: transform 0.2s;
+}
+.product img {
+    width: 100%;
+    height: auto;
+}
+.product:hover {
+    transform: scale(1.05);
+}
+.cart-icon {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cart-icon span {
+    font-size: 14px;
+    color: red;
+}
+/* Existing styles (for the cart, product list, etc.) */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+/* New styles for confirmation page */
+h2 {
+    color: green;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+li {
+    padding: 5px 0;
+}
+
+strong {
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

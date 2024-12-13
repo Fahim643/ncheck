@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Your Shopping Cart</h1>
+    </header>
+
+    <main id="cart-items">
+        <!-- Cart Items will load here -->
+    </main>
+
+    <form id="order-form">
+        <h3>Place Your Order</h3>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="address">Delivery Address:</label>
+        <input type="text" id="address" name="address" required>
+        <button type="button" onclick="placeOrder()">Place Order</button>
+    </form>
+
+    <script>
+        // Display items in cart
+        function displayCart() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartDiv = document.getElementById("cart-items");
+            cartDiv.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartDiv.innerHTML = "<p>Your cart is empty.</p>";
+            } else {
+                cart.forEach((item, index) => {
+    cartDiv.innerHTML += `
+        <div class="cart-item">
+            <h4>${item.name}</h4>
+            <p>Price: $${item.price}</p>
+            <p>Quantity: <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)"></p>
+            <p>Total: $${(item.price * item.quantity).toFixed(2)}</p>
+            <button onclick="deleteCartItem(${index})">Delete</button>
+            <hr>
+        </div>
+    `;
+});
+
+            }
+        }
+
+        // Update quantity of an item in the cart
+        function updateQuantity(index, value) {
+            const cart = JSON.parse(localStorage.getItem("cart"));
+            cart[index].quantity = parseInt(value);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            displayCart();
+        }
+
+        // Handle placing the order (storing data)
+        function placeOrder() {
+    const email = document.getElementById("email").value;
+    const address = document.getElementById("address").value;
+
+    if (!email || !address) {
+        alert("Please fill in all the details.");
+        return;
+    }
+
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const orderDetails = {
+        email: email,
+        address: address,
+        items: cart
+    };
+
+    // Send the order details to the server
+    fetch("http://localhost:3000/submit-order", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(orderDetails),
+})
+    .then(response => response.json())
+    .then(data => {
+   
+    // Save order details to localStorage
+    localStorage.setItem("latestOrder", JSON.stringify(orderDetails));
+    // Clear the cart and redirect to confirmation page
+    localStorage.removeItem("cart");
+    window.location.href = "confirmation.html";
+})
+
+    .catch(error => {
+        alert("Error placing order!");
+        console.error(error);
+    });
+}
+
+
+        // Call displayCart() on page load to display the cart
+        displayCart();
+        // Function to delete an item from the cart
+        function deleteCartItem(index) {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            
+            // Remove the item at the specified index
+            cart.splice(index, 1);
+            
+            // Update localStorage
+            localStorage.setItem("cart", JSON.stringify(cart));
+            
+            // Refresh the cart display
+            displayCart();
+        }
+
+    </script>
+</body>
+</html>
